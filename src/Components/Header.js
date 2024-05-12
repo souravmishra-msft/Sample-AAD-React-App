@@ -7,24 +7,36 @@ import { loginRequest_user } from '../authConfig';
 
 const Header = () => {
     const { instance, accounts } = useMsal();
+    const isAuthenticated = useIsAuthenticated();
 
     const [username, setUsername] = useState(null);
-    const isAuthenticated = useIsAuthenticated();
+    const [loggedInSince, setLoggedInSince] = useState(null);
+
 
     useEffect(() => {
         if (accounts.length > 0) {
             const account = accounts[0];
-            console.log(account);
-            console.log(`\nID-Token: ${account.idTokenClaims}`);
+            // console.log(JSON.stringify(account));
+            // console.log(`\nID-Token: ${JSON.stringify(account.idTokenClaims)}`);
             if (account) {
                 setUsername(account.username);
             }
         }
     }, [accounts]);
 
+    useEffect(() => {
+        // Update the "Logged in since" time every second
+        const intervalId = setInterval(() => {
+            setLoggedInSince(getUserLoggedInSince(localStorage.getItem('userLoggedInTime')));
+        }, 1000);
+    }, []);
+
     const handleLogin = (instance) => {
         instance.loginRedirect(loginRequest_user)
             .catch(e => console.log(e));
+
+        localStorage.setItem('isUserLoggedIn', true);
+        localStorage.setItem('userLoggedInTime', new Date().getTime());
     }
 
     const handleLogout = (instance) => {
@@ -32,6 +44,22 @@ const Header = () => {
         instance.logoutRedirect({ account: currentAccount })
             .catch(e => console.log(e));
     }
+
+    const getUserLoggedInSince = (loginTime) => {
+        const loggedInTime = parseInt(loginTime);
+        const currentTime = new Date().getTime();
+
+        // Time since logged in.
+        const duration = currentTime - loggedInTime;
+
+        // Convert the duration to human-readable format (hours, minutes, seconds)
+        const hours = Math.floor(duration / (1000 * 60 * 60));
+        const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((duration % (1000 * 60)) / 1000);
+
+        return `${hours} hrs, ${minutes} mins, ${seconds} secs`;
+    }
+
     return (
         <AppBar position='sticky' sx={styles.appBar}>
             <Container maxWidth='xl'>
@@ -42,8 +70,13 @@ const Header = () => {
 
                     {isAuthenticated ?
                         <>
-                            <Box sx={styles.usernameContainer}>
-                                <Typography variant='h6' sx={styles.userName}>{username}</Typography>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                <Box sx={styles.usernameContainer}>
+                                    <Typography variant='h6' sx={styles.userName}>{username}</Typography>
+                                </Box>
+                                <Box sx={styles.loginTimeContainer}>
+                                    <Typography variant='body2'>LoggedIn since: {loggedInSince}</Typography>
+                                </Box>
                             </Box>
                             <IconButton title='Logout' sx={{ color: '#fff' }} onClick={() => handleLogout(instance)}><Logout /></IconButton>
                         </>
@@ -87,5 +120,8 @@ const styles = {
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         overflow: 'hidden'
+    },
+    loginTimeContainer: {
+        px: 1,
     }
 }

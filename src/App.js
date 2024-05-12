@@ -13,7 +13,7 @@ function App() {
   const isAuthenticated = useIsAuthenticated();
   const [modalOpen, setModalOpen] = useState(false);
   const [isContinued, setIsContinued] = useState(false);
-  const isActive = useActive(5000);
+  const isActive = useActive(1800000);
 
   useEffect(() => {
     console.log(`IsActive: ${isActive}`);
@@ -24,7 +24,7 @@ function App() {
       setModalOpen(false);
     } else {
       // Open modal only if not continued, not active, and not already open
-      if (!isContinued && !isActive && !modalOpen) {
+      if (!isContinued && !isActive && !modalOpen && !localStorage.getItem('isUserLoggedIn')) {
         // Delay opening modal by 5 seconds
         const timeoutId = setTimeout(() => {
           setModalOpen(true);
