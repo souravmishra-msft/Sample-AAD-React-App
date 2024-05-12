@@ -25,7 +25,7 @@ const Home = () => {
                 <Typography variant='h4' my={2} sx={{ textAlign: 'center' }}>Sample ReactJS Application.</Typography>
                 <Typography variant='body2' sx={{ textAlign: 'center', color: 'neutral.normal' }}>This is a sample application developed using ReactJS and MSAL-React.</Typography>
                 <Typography variant='body2' mt={2} sx={{ textAlign: 'center', color: 'neutral.normal' }}>This application demonstrates scenarios like:</Typography>
-                <ul>
+                <ul style={{ color: 'neutral.normal', fontSize: '0.8rem' }}>
                     <li>User login using MSAL-React</li>
                     <li>Idle Timeout</li>
                 </ul>
