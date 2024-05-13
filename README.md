@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+| Services | Platforms | Author | SDK | Endpoint |
+|----------|-----------|--------|-----|----------|
+| Entra ID | React JS  | souravmishra-msft@outlook.com | MSAL-React 2.0.16 | Microsoft Identity Platform | 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Objective
 
-## Available Scripts
+This sample is to demonstrate the implementation of the idle timeout when using Microsoft Identity Platform. 
+The sample is a single-page application created using ReactJS and this sample implements a custom hook called "useActiveHook.js" to identify the inactivity on the application page. If the inactivity or idle time is more than a certain period, the application automatically force logs out the user.
 
-In the project directory, you can run:
+## Detailed Description
 
-### `npm start`
+There are ideally two main parts in this project:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Implementing MSAL-React to handle the user login and making a token acquisition call to fetch the access-tokens. 
+2. Post user logs in successfully to this application, the custom react hook `useActiveHook.js` starts monitoring the acitivity on the screen like `keypress`, `mousemove`, `touchmove`, `click` and `scroll`. If any of the following events occurs, the hook attaches an eventListener to that particular event.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How to run this project?
 
-### `npm test`
+Step 1: Register the sample application with your Microsoft Entra Tenant.
+- Open [https://portal.azure.com](https://portal.azure.com) and navigate to `App registrations` section.
+- Click on `New registration`.
+- Provide a name to your app. For eg: `AAD-Sample-React-App`.
+- Under **Supported account types** select `Accounts in any organizational directory (Any Microsoft Entra ID tenant - Multitenant)`, since this app is configured a multi-tenant app.
+- Under **Redirect URI** section select the platform as `Single-page Application (SPA)` and enter `http://localhost:3000` as your redirect_uri. 
+- Then click on **Register**.
+- Once the application is registered in Entra ID, under the **Overview** blade, you will find the client-id. Copy and paste it on a notepad, since we will need this client-id in the upcoming steps.
+- Select **Token Configuration** blade (if using the new portal, this blade is bundled under **Manage**) and add `login_hint` as an optional claim to the **ID-Token**.
+- To create the `login_hint` optional claim select `Add optional claim` and select `ID` as `Token type`. Scroll through the list of optional claims and select `login_hint`. The select **Add** to add and create login_hint optional claim for the **ID-Token**.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Step 2: Download the project files and run the sample.
+- Clone or fork the repository: https://github.com/souravmishra-msft/Sample-AAD-React-App.git
+- Open the code in VS-Code or any other editor of your choice.
+- Run `npm install` to install all the required npm packages that this code needs.
+- Open the `authConfig.js` and locate the **client-id** field. Paste the value of the client-id you copied from the previous step here.
+- Now your project is ready. To run this project, use `npm run start` command.
 
-### `npm run build`
+## User Experience:
+After launching the app, you should see the page that says **Please Login**. After login, if you wait for **5 seconds**, you will see a popup, that would ask you if you want to stay on this page or logout. There would also be a timer running for **15 seconds**. Within 15 seconds if you do not make a selection, the app will logout automatically.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> **Note:** This sample monitors the inactivity for 5 seconds only for demo purposes. Please update the 5 seconds interval as per your requirement. Locate the following `const isActive = useActive(5000);` in the **App.js** file and update the value present in the `useActive` hook to your desired time interval after which the inactivity popup should appear.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The `login_hint` optional claim that we configured above, would help in logging the user out without asking the user to select the account.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
