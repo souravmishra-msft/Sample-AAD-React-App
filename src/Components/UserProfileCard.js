@@ -134,7 +134,7 @@ const styles = {
         flexDirection: 'column',
     },
     profileCardHeader: {
-        width: '500px',
+        width: '100%',
         display: 'flex',
         alignItems: 'center',
         gap: '16px',

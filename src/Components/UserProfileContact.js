@@ -4,10 +4,10 @@ import { BadgeOutlined, CallOutlined, ChatOutlined, GroupsOutlined, LocationCity
 
 const UserProfileContact = ({ profileData }) => {
     return (
-        <Box sx={styles.overviewTab}>
+        <Box sx={styles.contactTab}>
             <Typography variant='h6'>Contact Information</Typography>
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={{ xs: 0.5, sm: 5 }}>
+            <Box>
+                <Grid container spacing={{ xs: 0.5, sm: 2 }}>
                     <Grid item xs={12} sm={4}>
                         <Box sx={{ display: 'flex', my: 2 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', color: 'neutral.normal' }}>
@@ -117,5 +117,8 @@ export default UserProfileContact
 
 /** @type {import("@mui/material").SxProps} */
 const styles = {
-
+    contactTab: {
+        width: '80%',
+        p: 2,
+    }
 }

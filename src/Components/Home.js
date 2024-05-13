@@ -57,7 +57,8 @@ const styles = {
         alignItems: 'center'
     },
     userProfileCardContainer: {
-        m: 5,
+        mx: 5,
+        mt: 2,
         p: 2,
         display: 'flex',
         flexDirection: 'column',
