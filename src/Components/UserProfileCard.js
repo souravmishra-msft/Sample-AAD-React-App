@@ -96,7 +96,7 @@ const UserProfileCard = () => {
                         <Tabs value={tabIndex} onChange={handleTabChange} TabIndicatorProps={{ sx: { background: 'primary.normal', height: 3, bottom: 2 } }} textColor='none'>
                             <Tab label='Overview' sx={styles.tab} />
                             <Tab label='Contact' sx={styles.tab} />
-                            <Tab label='Organization' sx={styles.tab} />
+                            {/* <Tab label='Organization' sx={styles.tab} /> */}
                             {/* <Tab label='Email' sx={styles.tab} /> */}
                         </Tabs>
                     </Box>
@@ -105,8 +105,8 @@ const UserProfileCard = () => {
                             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                 <UserProfileContact profileData={profileData} />
                                 <Divider variant='middle' sx={{ my: 2 }} />
-                                <UserProfileOrganization profileData={profileData} />
-                                <Divider variant='middle' sx={{ my: 2 }} />
+                                {/* <UserProfileOrganization profileData={profileData} />
+                                <Divider variant='middle' sx={{ my: 2 }} /> */}
                             </Box>
                         )}
                         {tabIndex === 1 && (
